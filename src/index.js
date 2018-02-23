@@ -16,7 +16,9 @@ const mountNode = document.getElementById('app');
 useStrict(true);
 
 const render = (Component, stores) => {
+   // 卸载掉旧的组件
    ReactDOM.unmountComponentAtNode(mountNode);
+   // 重新渲染新的组件
    ReactDOM.render(
       <Provider {...stores}>
          <BrowserRouter>
@@ -28,6 +30,11 @@ const render = (Component, stores) => {
 };
 
 render(Root, stores);
+
+/*
+   这里的热更新只监视 store 部分代码变化，然后进行重新渲染组件，
+   组件的热更新还是交给 react-hot-loader 组件处理（route文件中）
+*/
 
 if (module.hot) {
    module.hot.accept('./store/index.js', () => {

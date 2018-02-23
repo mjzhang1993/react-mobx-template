@@ -8,6 +8,11 @@ import MemberList from './MemberList';
 
 import './member.scss';
 
+/*
+   这里有个坑，只要子组件使用了 store 中的可观察属性，
+   就需要通过 @observer 将其变成响应式组件
+*/
+
 @observer
 export default class MemberCom extends Component {
    constructor(props) {

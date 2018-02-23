@@ -11,6 +11,10 @@
    border: 1px solid darkgreen;
    @include flexv;
    justify-content: space-around;
+   p {
+      width: 100%;
+      @include flexh;
+   }
 }
 
 .member-list-container {
