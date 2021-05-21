@@ -1,17 +1,36 @@
 # react-mobx-template
 
+## 旧版地址 https://github.com/mjzhang1993/react-mobx-template/tree/react16-mobx3
+
+## 当前版本使用技术
+
+- [x] React 17.x.x
+- [x] Mobx 6.x.x
+- [x] less
+- [x] webpack 5.x.x (模块联邦、DLL)
+- [x] Typescript
+- [x] eslint、stylelint、husky、lint-staged
+
+## 相关文章
+
+- [Stylelint 接入说明](https://blog.csdn.net/mjzhang1993/article/details/113999399)
+- [webpack 5 模块联邦实现微前端疑难问题解决](https://blog.csdn.net/mjzhang1993/article/details/115871597)
+- [mobx6 基本使用及 Api 详解](https://blog.csdn.net/mjzhang1993/article/details/116802249)
+- [mobx6 封装](https://blog.csdn.net/mjzhang1993/article/details/116802297)
+- [mobx6 封装后常见场景使用案例](https://blog.csdn.net/mjzhang1993/article/details/116802345)
+
 ## 命令
 
 #### 0. 安装
 
 ```bash
-   sudo yarn install
+   yarn install
 ```
 
 #### 1. 运行开发环境
 
 ```bash
-   yarn run dev # 或者 yarn start
+   yarn start
 ```
 
 #### 2. 输出生产环境文件
@@ -23,15 +42,5 @@
 #### 3. 输出生产环境，并查看模块分配
 
 ```bash
-   yarn run build --report
+   yarn run build -- -r
 ```
-
-#### 4. 运行本地开发服务器
-
-```bash
-   yarn run server
-```
-
-#### 5. 安装 yarn
-
-> yarn 是用来代替 npm 的 node 包管理工具, 与 npm 有类似的命令，具体安装方式及使用方法查看 [yarn 命令使用](http://blog.csdn.net/mjzhang1993/article/details/70092902)
