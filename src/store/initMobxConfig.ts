@@ -5,6 +5,6 @@ import { configure } from 'mobx';
 
 configure({
   useProxies: 'ifavailable',
-  enforceActions: 'always',
+  enforceActions: 'observed',
   reactionRequiresObservable: true,
 });

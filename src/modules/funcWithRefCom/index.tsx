@@ -1,9 +1,8 @@
 /**
  * 类组件 mobx 使用场景示例
  * */
-import { Observer } from 'mobx-react';
 import { Button } from 'antd';
-import { TGlobalStore, inject } from 'store';
+import { TGlobalStore, inject, Observer } from 'store';
 import { useImperativeHandle } from 'react';
 import { Link } from 'react-router-dom';
 import UserCreateForm from './view/UserCreateForm';

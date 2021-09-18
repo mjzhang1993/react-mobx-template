@@ -1,9 +1,8 @@
 /**
  * 类组件 mobx 使用场景示例
  * */
-import { Observer, disposeOnUnmount } from 'mobx-react';
 import { Button } from 'antd';
-import { TGlobalStore, inject } from 'store';
+import { TGlobalStore, inject, Observer, disposeOnUnmount } from 'store';
 import { Link } from 'react-router-dom';
 import UserCreateForm from './view/UserCreateForm';
 import UserList from './view/UserList';
@@ -49,6 +48,7 @@ class ClassicCom extends React.PureComponent<Props, State> {
      * 3. 建议使用 disposeOnUnmount 包装因为：
      * autorun reaction 两者一旦创建会始终追踪可观察数据变化，即使当前组件已经销毁，
      * 有可能造成内存泄漏。disposeOnUnmount 可以帮助在类组件销毁时关闭掉对可观察数据的追踪
+     * NOTICE：使用我们自己改造的 disposeOnUnmount 而不是从 mobx-react 中取，这样可以兼容 IE10
      * */
     disposeOnUnmount(
       this,

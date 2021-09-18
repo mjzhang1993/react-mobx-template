@@ -3,13 +3,13 @@
  * 这些方法在 store 外可以直接调用
  * 如要要在 store 内调用，请增加相关的类型声明
  * class UserStore {
- *    private readonly global: TGlobalStore;
+ *    private/public readonly global: TGlobalStore;
  *    public updateStore: TUpdateStore<UserStore>;
  * }
  * */
 import { STORE_CONST } from './constants';
 
-type TUpdateFn<T> = (storeInstance: T) => void;
+type TUpdateFn<SI> = (storeInstance: SI) => void;
 
 const baseActions = {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -36,14 +36,14 @@ const baseActions = {
   },
 };
 
-type Reset<T, K extends keyof T, O> = {
+export type Reset<T, K extends keyof T, O> = {
   [P in keyof T]: P extends K ? O : T[P];
 };
 
 type TempBaseActions = typeof baseActions;
 // eslint-disable-next-line @typescript-eslint/ban-types
-export type TUpdateStore<T extends {}> = (param: Partial<T> | TUpdateFn<T>) => void;
+export type TUpdateStore<SI extends {}> = (param: Partial<SI> | TUpdateFn<SI>) => void;
 
-export type TBaseActions<T> = Reset<TempBaseActions, 'updateStore', TUpdateStore<T>>;
+export type TBaseActions<SI> = Reset<TempBaseActions, 'updateStore', TUpdateStore<SI>>;
 
 export default baseActions;

@@ -58,6 +58,7 @@ module.exports = {
         allowGlobals: true,
       },
     ],
+    'react/jsx-no-bind': 0,
     'react/static-property-placement': 0, // static 静态类型强制定义在class 组件外
     'react/no-deprecated': 0,
     'react/jsx-no-target-blank': 0,

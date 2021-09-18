@@ -6,13 +6,13 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
  * 创建通用的 store 数据传递方法
  * */
 
-type GetProps<C> = C extends React.ComponentType<infer P>
+export type GetProps<C> = C extends React.ComponentType<infer P>
   ? C extends React.ComponentClass<P>
     ? React.ClassAttributes<InstanceType<C>> & P
     : P
   : never;
 
-type InjectorRef<C> = C extends React.ComponentType<infer P>
+export type InjectorRef<C> = C extends React.ComponentType<infer P>
   ? C extends React.ComponentClass<P>
     ? InstanceType<C>
     : C extends React.ForwardRefExoticComponent<
@@ -22,7 +22,7 @@ type InjectorRef<C> = C extends React.ComponentType<infer P>
     : never
   : never;
 
-type IReactComponent<P = any> =
+export type IReactComponent<P = any> =
   | React.ClassicComponentClass<P>
   | React.ComponentClass<P>
   | React.FunctionComponent<P>
