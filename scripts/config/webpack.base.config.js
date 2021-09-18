@@ -105,7 +105,10 @@ module.exports = (currentConfig) => {
         mobx: 'mobx'
       }),
       // 忽略对某些模块的打包
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
       ...(_.isEmpty(currentConfig.mfConfig) ? [] : [new ModuleFederationPlugin(currentConfig.mfConfig)]),
       ...dllPlugins,
       ...htmlPlugins,

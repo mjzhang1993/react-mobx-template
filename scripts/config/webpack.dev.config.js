@@ -17,7 +17,7 @@ module.exports = (devConfig) => {
     mode: 'development',
     devtool: 'eval-cheap-module-source-map',
     entry: {
-      main: devConfig.entryPath,
+      main: ['whatwg-fetch', devConfig.entryPath],
     },
     cache: {
       type: 'filesystem', // filesystem 缓存在文件系统，这样下次编译会有缓存的性能加成

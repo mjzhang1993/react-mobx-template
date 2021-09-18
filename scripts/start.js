@@ -32,7 +32,7 @@ _.set(devConfig, 'dllGuide', findDLLFile(devConfig, process.env.NODE_ENV));
 startServer();
 
 function startServer() {
-  const customPort = parseInt(params['port'], 10) || 3032;
+  const customPort = parseInt(params['port'], 10) || 'auto';
   const customHost = process.env.HOST || '0.0.0.0';
   const customProtocol = process.env.HTTPS === 'true' ? 'https' : 'http';
   const compiler = webpack(webpackConfig(devConfig));
@@ -45,7 +45,15 @@ function startServer() {
     customProxy: devConfig.proxy,
   });
 
-  const server = new WebpackDevServer(compiler, devServerOptions);
+  const server = new WebpackDevServer(devServerOptions, compiler);
 
-  server.listen(customPort, customHost);
+  ;(async () => {
+      await server.start();
+        // 当前 webpack-dev-server 版本 4.0.0 不能实现在 CTRL+C 时关闭退出进程（setupExitSignals 设置暂时无效）
+        // 预计后续版本会修复，更多讨论查看 https://github.com/webpack/webpack-dev-server/issues/1479
+        // 这里暂时通过监听事件 hack, 即使如此，Ctrl+C 后还是需要等一下才会关闭进程
+        process.on('SIGINT', function () {
+          process.exit();
+        });
+    })()
 }
