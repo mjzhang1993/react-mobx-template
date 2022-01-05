@@ -46,6 +46,7 @@ module.exports = {
     'no-unused-expressions': 2, // 开启对短路求值和三元表达式的支持
     'no-console': [2, { allow: ['warn', 'error', 'log'] }],
     'no-nested-ternary': 2, // 禁止三元表达式嵌套
+    'class-methods-use-this': 1,
     // jsx
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/click-events-have-key-events': 0, // 强制 绑定 onClick 事件同时也绑定 onKeyUp, onKeyDown, onKeyPress 等事件
@@ -66,6 +67,9 @@ module.exports = {
     'react/jsx-props-no-spreading': 0, // 禁止 jsx 组件上使用 <button {...props} />
     'react/no-array-index-key': 2, // 禁止使用遍历中的 index 作为 key, 通过重新命名变量避开 const count = idx;
     'react/require-default-props': 0, // 强制给 默认值
+    'react/function-component-definition': 0, // 强制使用一致的函数命名
+    'react/no-unused-class-component-methods': 1,
+    'import/prefer-default-export': 0,
     'import/no-extraneous-dependencies': 0, // import 的内容要在 package.json 的 dependencies下（关闭）
     /*
      * 1. 循环引用检查, 运行时开销很大

@@ -1,8 +1,9 @@
 import { Button, Form, Input, InputNumber } from 'antd';
 import { TGlobalStore } from 'store';
+import { withRouter, RouterProps } from '../../../utils/routerHoc';
 import UserLess from '../style/user.less';
 
-interface Props {
+interface Props extends RouterProps {
   classicComStore: TGlobalStore['classicComStore'];
   renderUserName: () => React.ReactNode;
 }
@@ -37,4 +38,4 @@ class UserCreateForm extends React.PureComponent<Props> {
   }
 }
 
-export default UserCreateForm;
+export default withRouter(UserCreateForm);

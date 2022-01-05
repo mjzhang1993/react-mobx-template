@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
-import qs from 'qs';
+import { Route, Routes, Navigate, Link } from 'react-router-dom';
 import { Button } from 'antd';
+import { WithRouter } from '../../utils/routerHoc';
 import Remote from '../remote';
 import Origin from '../original';
 import ClassicCom from '../classicCom';
@@ -23,77 +23,92 @@ const RouteEntry: React.FC = () => {
   // console.log(User.getStoreName());
 
   return (
-    <Switch>
-      <Route exact path="/login" render={() => <Redirect to="/" />} />
-      <Route
-        exact
-        path="/"
-        render={() => (
-          <div className={RootContainerLess.login}>
-            <Button>click me</Button>
-            <p>
-              <Link to="/origin">/origin</Link>
-            </p>
-            <p>
-              <Link to="/remote">/remote</Link>
-            </p>
-            <p>
-              <Link to="/mobxApi">/mobxApi</Link>
-            </p>
-            <p>
-              <Link to="/classic">/classic</Link>
-            </p>
-            <p>
-              <Link to="/func">/func</Link>
-            </p>
-            <p>
-              <Link to="/funcWithRef">/funcWithRef</Link>
-            </p>
-          </div>
-        )}
-      />
-      <Route path="/origin" component={Origin} />
-      <Route path="/mobxApi" component={MobxApi} />
-      <Route
-        path="/classic/:id?"
-        render={({ match, location }) => {
-          const { type } = qs.parse(location.search.replace(/^\?/, '')) || {};
-          console.log(type, _.get(match, 'params.id'));
-          return (
-            <div>
-              <Button onClick={handleClick}>ref click</Button>
-              <ClassicCom
-                ref={classicRef}
-                id={_.get(match, 'params.id')}
-                type={(type as string) || ''}
-              />
+    <Routes>
+      <Route path="/">
+        <Route
+          index
+          element={
+            <div className={RootContainerLess.login}>
+              <Button>click me</Button>
+              <p>
+                <Link to="origin">/origin</Link>
+              </p>
+              <p>
+                <Link to="remote">/remote</Link>
+              </p>
+              <p>
+                <Link to="mobxApi">/mobxApi</Link>
+              </p>
+              <p>
+                <Link to="classic/xxx">/classic</Link>
+              </p>
+              <p>
+                <Link to="func/xxx">/func</Link>
+              </p>
+              <p>
+                <Link to="funcWithRef">/funcWithRef</Link>
+              </p>
             </div>
-          );
-        }}
-      />
-      <Route
-        path="/func/:id?"
-        render={({ match, location }) => {
-          const { type } = qs.parse(location.search.replace(/^\?/, '')) || {};
-          console.log(type, _.get(match, 'params.id'));
-          return <FuncCom type={(type as string) || ''} />;
-        }}
-      />
-      <Route
-        path="/funcWithRef/:id?"
-        render={({ match, location }) => {
-          const { type } = qs.parse(location.search.replace(/^\?/, '')) || {};
-          console.log(type, _.get(match, 'params.id'));
-          return (
-            <div>
-              <Button onClick={handleClick}>ref click</Button>
-              <FuncWithRefCom ref={funcRef} type={(type as string) || ''} />
-            </div>
-          );
-        }}
-      />
-      <Route path="/remote" component={Remote} />
-    </Switch>
+          }
+        />
+        <Route path="login" element={<Navigate to="/" replace />} />
+        <Route path="origin" element={<Origin />} />
+        <Route path="mobxApi" element={<MobxApi />} />
+        <Route
+          path="classic/:id"
+          element={
+            <WithRouter>
+              {({ params, searchParams }) => {
+                const type = searchParams.get('type');
+                console.log('classic', params, type);
+                return (
+                  <div>
+                    <Button onClick={handleClick}>ref click</Button>
+                    <ClassicCom
+                      ref={classicRef}
+                      id={_.get(params, 'id') || ''}
+                      type={(type as string) || ''}
+                    />
+                  </div>
+                );
+              }}
+            </WithRouter>
+          }
+        />
+        <Route
+          path="func/:id"
+          element={
+            <WithRouter>
+              {({ searchParams }) => {
+                const type = searchParams.get('type');
+                console.log('func', type);
+                return <FuncCom type={(type as string) || ''} />;
+              }}
+            </WithRouter>
+          }
+        />
+        <Route
+          path="funcWithRef/:id"
+          element={
+            <WithRouter>
+              {({ searchParams }) => {
+                const type = searchParams.get('type');
+                console.log('funcWithRef', type);
+                return (
+                  <div>
+                    <Button onClick={handleClick}>ref click</Button>
+                    <FuncWithRefCom ref={funcRef} type={(type as string) || ''} />
+                  </div>
+                );
+              }}
+            </WithRouter>
+          }
+        />
+        <Route path="remote" element={<Remote />} />
+        <Route path="/notFount" element={<div>nnnnn</div>} />
+        <Route path="*" element={<div>not found</div>} />
+      </Route>
+    </Routes>
   );
 };
 
