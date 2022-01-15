@@ -81,7 +81,7 @@
       "postcss-object-fit-images": "^1.1.2",
       "postcss-preset-env": "^7.0.2",
       "prettier": "^2.5.1",
-      "shelljs": "^0.8.4",
+      "shelljs": "^0.8.5",
       "style-loader": "^3.3.1",
       "stylelint": "^14.1.0",
       "stylelint-config-prettier": "^9.0.3",
