@@ -7,7 +7,7 @@ import { useImperativeHandle } from 'react';
 import { Link } from 'react-router-dom';
 import UserCreateForm from './view/UserCreateForm';
 import UserList from './view/UserList';
-import UserLess from './style/user.less';
+import UserLess from './style/user.module.less';
 
 interface Props {
   funcRefComStore: TGlobalStore['funcRefComStore'];

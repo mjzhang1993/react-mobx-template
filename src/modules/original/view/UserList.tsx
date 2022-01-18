@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import { TOriginalStore } from '../OriginalStore';
-import UserLess from '../style/user.less';
+import UserLess from '../style/user.module.less';
 
 interface Props {
   originalStore: TOriginalStore;

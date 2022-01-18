@@ -6,7 +6,7 @@ import Remote from '../remote';
 import Origin from '../original';
 import ClassicCom from '../classicCom';
 import FuncWithRefCom from '../funcWithRefCom';
-import RootContainerLess from './styles/RootContainer.less';
+import RootContainerLess from './styles/root.module.less';
 
 const MobxApi = React.lazy(() => import('../mobxApi'));
 const FuncCom = React.lazy(() => import('../functionalCom'));
@@ -46,7 +46,7 @@ const RouteEntry: React.FC = () => {
                 <Link to="func/xxx">/func</Link>
               </p>
               <p>
-                <Link to="funcWithRef">/funcWithRef</Link>
+                <Link to="funcWithRef/xxx">/funcWithRef</Link>
               </p>
             </div>
           }

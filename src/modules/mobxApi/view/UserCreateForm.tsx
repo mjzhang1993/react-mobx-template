@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber } from 'antd';
 import { TGlobalStore } from 'store';
-import UserLess from '../style/user.less';
+import UserLess from '../style/user.module.less';
 
 interface Props {
   mobxApiStore: TGlobalStore['mobxApiStore'];

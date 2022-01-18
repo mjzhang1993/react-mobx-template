@@ -1,7 +1,7 @@
 import { Checkbox } from 'antd';
 import { TGlobalStore, convert } from 'store';
 
-import UserLess from '../style/user.less';
+import UserLess from '../style/user.module.less';
 
 interface Props {
   mobxApiStore: TGlobalStore['mobxApiStore'];

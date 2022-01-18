@@ -6,7 +6,7 @@ import { TGlobalStore, inject, Observer, disposeOnUnmount } from 'store';
 import { Link } from 'react-router-dom';
 import UserCreateForm from './view/UserCreateForm';
 import UserList from './view/UserList';
-import UserLess from './style/user.less';
+import UserLess from './style/user.module.less';
 
 interface Props {
   classicComStore: TGlobalStore['classicComStore'];

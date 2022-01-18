@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber } from 'antd';
 import { TGlobalStore } from 'store';
 import { withRouter, RouterProps } from '../../../utils/routerHoc';
-import UserLess from '../style/user.less';
+import UserLess from '../style/user.module.less';
 
 interface Props extends RouterProps {
   classicComStore: TGlobalStore['classicComStore'];

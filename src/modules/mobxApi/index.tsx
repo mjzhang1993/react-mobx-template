@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { TGlobalStore, inject, Observer } from 'store';
 import UserCreateForm from './view/UserCreateForm';
 import UserList from './view/UserList';
-import UserLess from './style/user.less';
+import UserLess from './style/user.module.less';
 
 interface Props {
   mobxApiStore: TGlobalStore['mobxApiStore'];
