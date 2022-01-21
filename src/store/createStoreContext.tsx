@@ -4,6 +4,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 
 /**
  * 创建通用的 store 数据传递方法
+ * TODO: 封装的 inject 搭配 Vite 在 HMR 方面有时会失败
  * */
 
 export type GetProps<C> = C extends React.ComponentType<infer P>

@@ -7,6 +7,7 @@ import Origin from '../original';
 import ClassicCom from '../classicCom';
 import FuncWithRefCom from '../funcWithRefCom';
 import RootContainerLess from './styles/root.module.less';
+import Huawei from './styles/huawei.jpeg';
 
 const MobxApi = React.lazy(() => import('../mobxApi'));
 const FuncCom = React.lazy(() => import('../functionalCom'));
@@ -28,26 +29,34 @@ const RouteEntry: React.FC = () => {
         <Route
           index
           element={
-            <div className={RootContainerLess.login}>
-              <Button>click me</Button>
-              <p>
-                <Link to="origin">/origin</Link>
-              </p>
-              <p>
-                <Link to="remote">/remote</Link>
-              </p>
-              <p>
-                <Link to="mobxApi">/mobxApi</Link>
-              </p>
-              <p>
-                <Link to="classic/xxx">/classic</Link>
-              </p>
-              <p>
-                <Link to="func/xxx">/func</Link>
-              </p>
-              <p>
-                <Link to="funcWithRef/xxx">/funcWithRef</Link>
-              </p>
+            <div style={{ display: 'flex' }}>
+              <div className={RootContainerLess.login}>
+                <Button>click me</Button>
+                <p>
+                  <Link to="origin">/origin</Link>
+                </p>
+                <p>
+                  <Link to="remote">/remote</Link>
+                </p>
+                <p>
+                  <Link to="mobxApi">/mobxApi</Link>
+                </p>
+                <p>
+                  <Link to="classic/xxx">/classic</Link>
+                </p>
+                <p>
+                  <Link to="func/xxx">/func</Link>
+                </p>
+                <p>
+                  <Link to="funcWithRef/xxx">/funcWithRef</Link>
+                </p>
+              </div>
+              <div>
+                {/* vite publicDir 所在目录中的静态资源可以被 / 直接使用 */}
+                <img src="/huawei.jpeg" alt="" />
+                <img src={Huawei} alt="" />
+                <div className={RootContainerLess.bgimg} />
+              </div>
             </div>
           }
         />

@@ -1,5 +1,16 @@
-/**
- * 如果 mfConfig.exposes 有配置则需要使用 import('./bootstrap');
- * */
-// import('./bootstrap');
-import './bootstrap';
+import 'store/initMobxConfig';
+import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
+import globalStore, { Provider } from 'store';
+import RootContainer from './modules/root/routes';
+
+ReactDOM.render(
+  <Provider store={globalStore}>
+    <React.Suspense fallback={<div>loading...</div>}>
+      <HashRouter>
+        <RootContainer />
+      </HashRouter>
+    </React.Suspense>
+  </Provider>,
+  document.getElementById('root'),
+);

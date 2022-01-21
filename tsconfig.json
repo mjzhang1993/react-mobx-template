@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "jsx": "preserve",
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "noEmit": true,
     "moduleResolution": "node",
     "rootDir": "src",
@@ -19,6 +20,8 @@
     "incremental": true, // 增量编译，加快速度
     "allowUmdGlobalAccess": true,
     "downlevelIteration": true,
+    "isolatedModules": true,
+    "types": ["vite/client"],
     "paths": {
       "store/*": [
         "src/store/*"

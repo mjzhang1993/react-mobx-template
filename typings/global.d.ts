@@ -8,12 +8,8 @@ import {IObservableArray, IObservable, ObservableMap, ObservableSet} from 'mobx'
 declare global {
   type _ = typeof lodash;
   const mobx: typeof MobX;
-  const __webpack_init_sharing__: any;
-  const __webpack_share_scopes__: any;
 
   interface Window {
-    __webpack_init_sharing__: any;
-    __webpack_share_scopes__: any;
   }
 
   namespace Mobx {

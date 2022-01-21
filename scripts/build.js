@@ -1,7 +1,8 @@
 'use strict';
+
 /*
-   生产环境输出编译后文件
-*/
+ * npm build ...
+ * */
 
 // 设置环境变量
 process.env.NODE_ENV = 'production';
@@ -11,58 +12,45 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
-const { parseCommandLine } = require('./utils/parseCommandLine');
-const params = parseCommandLine();
-
-// 开始构建
-const shell = require('shelljs');
 const _ = require('lodash');
-const webpack = require('webpack');
-const chalk = require('chalk');
+const path = require('path');
+const {build} = require('vite');
+const viteConfig = require('./config/vite.config');
 const pathConfig = require('./config/paths.config');
-const webpackConfig = require('./config/webpack.prod.config');
-const { findDLLFile } = require('./utils/findDLLFile');
+const {parseCommandLine} = require('./utils/parseCommandLine');
 
+const params = parseCommandLine();
 const prodConfig = pathConfig(process.env.NODE_ENV);
 
-_.set(prodConfig, 'bundleAnalyzerReport', params['report']);
-_.set(prodConfig, 'dllGuide', findDLLFile(prodConfig, process.env.NODE_ENV))
+_.set(prodConfig, 'report', params['report']);
+_.set(prodConfig, 'legacy', params['legacy']);
+_.set(prodConfig, 'htmlParameter', {
+  MAIN_API_URL: 'https://www.baidu.com' // 测试 html 模板传参
+});
 
-// 输出文件夹清空
-shell.rm('-rf', 'build');
 
-// loading
-console.log('building for production...');
-
-const compiler = webpack(webpackConfig(prodConfig));
-
-compiler.run((err, stats) => {
-  if (err) {
-    console.error(err);
-    throw err;
-  }
-
-  // report 开启后不输出其他 stdout，否则会打断 report ，报出错误
-  if (params['report']) return;
-
-  // 编译结果输出
-  process.stdout.write(
-    stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false,
-    }) + '\n\n',
-  );
-
-  if (stats.hasErrors()) {
-    console.log(chalk.red('  Build failed with errors.\n'));
-    process.exit(1);
-  }
-
-  console.log(chalk.cyan('  Build complete.\n'));
-  // compiler.close();
-  process.exit(0);
-})
-
+// 开始构建
+;(async () => {
+  await build(viteConfig(process.env.NODE_ENV, prodConfig)({
+    configFile: false, // 不读取配置文件
+    build: {
+      outDir: prodConfig.outDir, // 指定输出路径
+      assetsDir: prodConfig.assetsDir, // 一个相对于 outDir 的静态资源输出路径
+      cssCodeSplit: true, // 输出的 css 是否是经过 拆分的
+      sourcemap: true,
+      emptyOutDir: true, // 构建时清空目标文件夹
+      chunkSizeWarningLimit: 500,
+      rollupOptions: {
+        output: {
+          manualChunks: { // 自定义一些可以空想 chunk, 默认只拆出一个 vendor
+            basic: ['react', 'react-dom', 'react-router-dom', 'mobx', 'mobx-react'],
+            vendor: ['antd', 'axios', 'lodash', 'qs']
+          },
+          chunkFileNames: path.join(prodConfig.assetsDir, 'chunk/[name]-[hash].js'),
+          entryFileNames: path.join(prodConfig.assetsDir, 'js/[name]-[hash].js'),
+          assetFileNames: path.join(prodConfig.assetsDir, '[ext]/[name]-[hash].[ext]')
+        }
+      }
+    },
+  }));
+})()

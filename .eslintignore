@@ -3,5 +3,6 @@ node_modules/**/*
 .eslintrc.js
 lint-staged.config.js
 babel.config.js
+vite.config.ts
 typings/*
 dll/*

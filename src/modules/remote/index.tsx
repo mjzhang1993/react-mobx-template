@@ -1,6 +1,5 @@
 import { Button, Row, Col, Form, Input } from 'antd';
 import { TGlobalStore, inject } from 'store';
-import DynamicSystem from '../../components/DynamicSystem';
 
 interface Props {
   remoteStore: TGlobalStore['remoteStore'];
@@ -70,12 +69,7 @@ class DynamicRemote extends React.Component<Props> {
           </Form.Item>
         </Form>
         <div style={{ width: '100%', height: 'auto', border: '1px solid red' }}>
-          <DynamicSystem
-            module={module}
-            remoteUrl={remoteUrl}
-            scope={scope}
-            store={{ counter: 0 }}
-          />
+          {/* 暂时没测模块联邦 */}
         </div>
       </div>
     );

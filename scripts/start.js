@@ -12,48 +12,40 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
-const { parseCommandLine } = require('./utils/parseCommandLine');
-const params = parseCommandLine();
-
-// 开始构建
 const _ = require('lodash');
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
+const {createServer} = require('vite');
+const viteConfig = require('./config/vite.config');
 const pathConfig = require('./config/paths.config');
-const webpackConfig = require('./config/webpack.dev.config');
-const devServerConfig = require('./config/devServer.config');
-const {findDLLFile} = require('./utils/findDLLFile');
+const {parseCommandLine} = require('./utils/parseCommandLine');
+const pkg = require('../package.json');
 
+const params = parseCommandLine();
 const devConfig = pathConfig(process.env.NODE_ENV);
 
-// webpack 的配置替换
-_.set(devConfig, 'dllGuide', findDLLFile(devConfig, process.env.NODE_ENV));
+_.set(devConfig, 'htmlParameter', {
+  MAIN_API_URL: 'https://www.baidu.com' // 测试 html 模板传参
+});
 
-startServer();
+// 开始构建
+;(async () => {
+  const server = await createServer(viteConfig(process.env.NODE_ENV, devConfig)({
+    configFile: false, // 不读取配置文件
+    optimizeDeps: {
+      include: Object.keys(pkg.dependencies)
+    },
+    server: {
+      port: parseInt(params['port'], 10) || 3000,
+      host: true,
+      https: params['https'],
+      proxy: {},
+      open: true,
+      fs: {strict: true},
+      hmr: {
+        overlay: false
+      }
+    },
+  }))
+  await server.listen()
 
-function startServer() {
-  const customPort = parseInt(params['port'], 10) || 'auto';
-  const customHost = process.env.HOST || '0.0.0.0';
-  const customProtocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-  const compiler = webpack(webpackConfig(devConfig));
-  const devServerOptions = devServerConfig({
-    buildPath: devConfig.buildPath,
-    publicPath: devConfig.publicPath,
-    customPort,
-    customHost,
-    customProtocol,
-    customProxy: devConfig.proxy,
-  });
-
-  const server = new WebpackDevServer(devServerOptions, compiler);
-
-  ;(async () => {
-      await server.start();
-        // 当前 webpack-dev-server 版本 4.0.0 不能实现在 CTRL+C 时关闭退出进程（setupExitSignals 设置暂时无效）
-        // 预计后续版本会修复，更多讨论查看 https://github.com/webpack/webpack-dev-server/issues/1479
-        // 这里暂时通过监听事件 hack, 即使如此，Ctrl+C 后还是需要等一下才会关闭进程
-        process.on('SIGINT', function () {
-          process.exit();
-        });
-    })()
-}
+  server.printUrls()
+})()
