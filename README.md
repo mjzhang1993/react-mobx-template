@@ -12,8 +12,8 @@
 - [x] Typescript
 - [x] eslint、stylelint、husky、lint-staged
 
-> react-router v5 版本查看分支 https://github.com/mjzhang1993/react-mobx-template/tree/react-router-v5
-> vite 版本查看分支 https://github.com/mjzhang1993/react-mobx-template/tree/vite-router-v6
+- react-router v5 版本查看分支 https://github.com/mjzhang1993/react-mobx-template/tree/react-router-v5
+- vite 版本查看分支 https://github.com/mjzhang1993/react-mobx-template/tree/vite-router-v6
 
 ## 相关文章
 
